@@ -2,7 +2,7 @@
 
 <h3>Used Content</h3>
 <ul>
-  <ul>RecyclerView</ul>
+  <li>RecyclerView</li>
   <li>Retrofit Library</li>
   <li>Gson Converter</li>
   <li>Picasso</li>

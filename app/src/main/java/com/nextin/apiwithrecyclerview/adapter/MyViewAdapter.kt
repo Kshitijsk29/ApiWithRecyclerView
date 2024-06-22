@@ -15,7 +15,14 @@ import com.squareup.picasso.Picasso
 class MyViewAdapter(val context :Activity ,val productArray :ArrayList<Product>)
     :RecyclerView.Adapter<MyViewAdapter.MyViewHolder>(){
 
-        class MyViewHolder(itemView :View):RecyclerView.ViewHolder(itemView){
+        lateinit var myListener :OnItemClickListener
+        interface OnItemClickListener{
+            fun selectedItem(position: Int)
+        }
+        fun setOnItemSelectListener(listener :OnItemClickListener){
+            myListener = listener
+        }
+        class MyViewHolder(itemView :View, listener: OnItemClickListener):RecyclerView.ViewHolder(itemView){
              var  title : TextView
              var  image : ShapeableImageView
              var  price :TextView
@@ -26,12 +33,16 @@ class MyViewAdapter(val context :Activity ,val productArray :ArrayList<Product>)
                 image = itemView.findViewById(R.id.productImage)
                 price = itemView.findViewById(R.id.productPrice)
                 rating= itemView.findViewById(R.id.rating)
+
+                itemView.setOnClickListener {
+                    listener.selectedItem(adapterPosition)
+                }
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.each_item_view,parent,false)
-        return MyViewHolder(view)
+        return MyViewHolder(view,myListener)
     }
     override fun getItemCount(): Int {
         return productArray.size
@@ -42,5 +53,6 @@ class MyViewAdapter(val context :Activity ,val productArray :ArrayList<Product>)
         holder.price.text = currentItem.price.toString()
         Picasso.get().load(currentItem.thumbnail).into(holder.image);
         holder.rating.rating = currentItem.rating.toFloat()
+
     }
 }

@@ -1,5 +1,6 @@
 package com.nextin.apiwithrecyclerview
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,15 @@ class MainActivity : AppCompatActivity() {
                 val myAdapter = MyViewAdapter(this@MainActivity , productData)
                 binding.recyclerView.adapter = myAdapter
 
+                myAdapter.setOnItemSelectListener(object :MyViewAdapter.OnItemClickListener{
+                    override fun selectedItem(position: Int) {
+
+
+                        val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                        intent.putStringArrayListExtra("images",productData[position].images)
+                        startActivity(intent)
+                    }
+                })
             }
             override fun onFailure(p0: Call<MyData>, p1: Throwable) {
                 Log.d("Main Error","On Failure is "+ p1.message)

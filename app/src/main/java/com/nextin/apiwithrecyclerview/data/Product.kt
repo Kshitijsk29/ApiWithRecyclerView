@@ -8,7 +8,7 @@ data class Product(
     val dimensions: Dimensions,
     val discountPercentage: Double,
     val id: Int,
-    val images: List<String>,
+    val images: ArrayList<String>,
     val meta: Meta,
     val minimumOrderQuantity: Int,
     val price: Double,
